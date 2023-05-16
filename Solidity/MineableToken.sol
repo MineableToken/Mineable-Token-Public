@@ -4,7 +4,7 @@
 // Decimals: 18 
 //
 // Total supply: 21,000,000
-// Mined over 50+ years using Bitcoins Distrubtion halvings every 4 years. Uses Proof-oF-Work to distribute the tokens. 
+// Mined over 50+ years using Bitcoins Distrubtion halvings every ~4 years. Uses Proof-oF-Work to distribute the tokens. 
 // Public Miner is available.
 //
 //      
