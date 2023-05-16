@@ -235,7 +235,7 @@ contract MineableToken is IERC20 {
 			}
 		}
 
-		// total supply of MINED tokens is 21000000000000000000000000  because of 18 decimal places
+		// total supply of MINED tokens is ~21000000000000000000000000  because of 18 decimal places
 
 		epochCount = epochCount.add(1);
 
