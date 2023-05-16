@@ -150,7 +150,8 @@ contract MineableToken is IERC20 {
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
-    
+    uint public startTime;
+    bool init = false;
 // metadata
     string public name = "Mineable Token";
     string public constant symbol = "0xMT";
@@ -158,7 +159,8 @@ contract MineableToken is IERC20 {
 	
     
 	constructor() {
-	        reward_amount = 50 * 10**uint(decimals);
+		startTime = block.timestamp + 60 * 60 * 24 * 1; //Mining opens 1 days after contract launch.
+	        reward_amount = 0;  //Zero reward for first day to setup miners
 	        rewardEra = 0;
 	        tokensMinted = 0;
 	        epochCount = 0;
@@ -168,7 +170,24 @@ contract MineableToken is IERC20 {
 	        _startNewMiningEpoch();
 	}
 
+////////////////////////////////
+// Contract Initial Functions //
+///////////////////////////////
 
+
+	function openMining() public returns (bool success) {
+		//Starts mining after 1 day period for miners to setup is done
+		require(!init, "Only allowed to run once");
+		init = true;
+		require(block.timestamp >= startTime && block.timestamp <= startTime + 60* 60 * 24* 7, "Must be after startTime");
+	        reward_amount = 50 * 10**uint(decimals);
+	        rewardEra = 0;
+	        tokensMinted = 0;
+	        epochCount = 0;
+	        epochOld = 0;
+		
+		return true;
+	}
 
 
 /////////////////////////////
@@ -195,7 +214,7 @@ contract MineableToken is IERC20 {
 
 		balances[mintToAddress] = balances[mintToAddress].add(reward_amount);
 		emit Transfer(address(0), mintToAddress, reward_amount);
-		tokensMinted = tokensMinted.add(reward_amount)
+		tokensMinted = tokensMinted.add(reward_amount);
 
 		emit Mint(mintToAddress, reward_amount, epochCount, challengeNumber );
 
