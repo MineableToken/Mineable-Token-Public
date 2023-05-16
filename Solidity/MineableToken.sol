@@ -169,15 +169,15 @@ contract MineableToken is IERC20 {
 	
     
     // mint 1 token to setup LPs
-	    constructor() {
+	constructor() {
 	        reward_amount = 50 * 10**uint(decimals);
-    	    rewardEra = 0;
+	        rewardEra = 0;
 	        tokensMinted = 0;
 	        epochCount = 0;
 	        epochOld = 0;
-	        miningTarget = _MAXIMUM_TARGET.div(1);
-            latestDifficultyPeriodStarted2 = block.timestamp;
-    	    _startNewMiningEpoch();
+	        miningTarget = _MAXIMUM_TARGET.div(1000);
+	        latestDifficultyPeriodStarted2 = block.timestamp;
+	        _startNewMiningEpoch();
 	}
 
 
