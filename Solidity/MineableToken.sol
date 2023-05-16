@@ -457,13 +457,13 @@ contract MineableToken is IERC20 {
 		return tokensMinted;
 	}
 
-    function getCirculatingSupply() public view returns (uint) {
-        return tokensMinted;
-    }
+	function getCirculatingSupply() public view returns (uint) {
+		return tokensMinted;
+	}
 
 	//~21m coins total in minting
-	//reward begins at 50 and the same for the first 4 eras (0-3), targetTime doubles to compensate for first 4 eras
-	//After rewardEra = 4 it halves the reward every Era after because no more targetTime is added
+	//reward begins at 50 and stays same for the first 4 eras (0-3), targetTime doubles to compensate for first 4 eras
+	//After rewardEra = 4 it halves the reward every Era because no more targetTime is added
 	function getMiningReward() public view returns (uint) {
 
 		if(rewardEra < 4){
