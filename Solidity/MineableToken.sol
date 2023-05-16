@@ -4,12 +4,14 @@
 // Decimals: 18 
 //
 // Total supply: 21,000,000
-// Mined over 50+ years using Bitcoins Distrubtion halvings every ~4 years. Uses Proof-oF-Work to distribute the tokens. 
-// Public Miner is available.
 //
-//      
+// Mined over 50+ years using Bitcoins Distrubtion reward halvings every ~4 years. Uses Proof-oF-Work to distribute the tokens.
+//
+// Website: https://0xmt.com/
+// Public Miner: https://0xmt.com/download.html
+// Discord: https://discord.gg/EBHPmMUE45
+//
 // No premine, dev cut, or advantage taken at launch. Public miner available at launch.  100% of the token is given away fairly over 100+ years using Bitcoins model!
-//
 //
 // Credits: 0xBitcoin
 
