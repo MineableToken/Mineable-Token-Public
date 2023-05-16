@@ -193,7 +193,7 @@ contract MineableToken is IERC20 {
 	
 
 	function mintTo(uint256 nonce, bytes32 challenge_digest, address mintToAddress) public returns (uint256 totalOwed) {
-
+	
 		bytes32 digest =  keccak256(abi.encodePacked(challengeNumber, msg.sender, nonce));
 
 		//the challenge digest must match the expected
@@ -204,7 +204,6 @@ contract MineableToken is IERC20 {
 
 		_startNewMiningEpoch();
 
-		
 		balances[mintToAddress] = balances[mintToAddress].add(reward_amount);
 		emit Transfer(address(0), mintToAddress, reward_amount);
 		tokensMinted = tokensMinted.add(reward_amount)
@@ -217,8 +216,7 @@ contract MineableToken is IERC20 {
 	
 
 	function _startNewMiningEpoch() internal {
-
-
+	
 		//if max supply for the era will be exceeded next reward round then enter the new era before that happens
 		//15 is the final reward era.
 		if( tokensMinted.add(reward_amount) > maxSupplyForEra && rewardEra < 15)
@@ -250,10 +248,11 @@ contract MineableToken is IERC20 {
 		bytes32 challengeNumber2 = ArbSys(0x0000000000000000000000000000000000000064).arbBlockHash( ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber() - 1);
 		require(challengeNumber2 != challengeNumber, "No same challenge Solves");
 		challengeNumber = challengeNumber2;
-    }
+	}
 
 
 	function _reAdjustDifficulty() internal {
+	
 		uint256 blktimestamp = block.timestamp;
 		uint TimeSinceLastDifficultyPeriod2 = blktimestamp - latestDifficultyPeriodStarted2;
 		uint epochTotal = epochCount - epochOld;
