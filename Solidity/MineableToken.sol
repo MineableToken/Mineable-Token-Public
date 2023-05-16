@@ -124,7 +124,6 @@ contract MineableToken is IERC20 {
     using SafeMath2 for uint256;
     using ExtendedMath2 for uint;
     event Mint(address indexed from, uint reward_amount, uint epochCount, bytes32 newChallengeNumber);
-    event MegaMint(address indexed from, uint epochCount, bytes32 newChallengeNumber, uint NumberOfTokensMinted, uint256 TokenMultipler);
 
 // Managment events
     uint256 override public totalSupply = 21000000000000000000000000;
@@ -136,7 +135,6 @@ contract MineableToken is IERC20 {
     uint public latestDifficultyPeriodStarted2 = block.timestamp; //BlockTime of last readjustment
     uint public latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
     uint public epochCount = 0;//number of 'blocks' mined
-    uint public latestreAdjustStarted = block.timestamp; 
     uint public _BLOCKS_PER_READJUSTMENT = 1024; // should be 1024
     uint public  _MAXIMUM_TARGET = 2**234;
     uint public  _MINIMUM_TARGET = 2**16; 
@@ -148,8 +146,7 @@ contract MineableToken is IERC20 {
     uint public maxSupplyForEra = (_totalSupply - _totalSupply.div( 2**(rewardEra + 1)));
     uint public reward_amount;
     
-//Stuff for Functions
-    uint public tokensMinted = 0;			//Tokens Minted to Miners
+    uint public tokensMinted = 0;	//Tokens Minted
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
