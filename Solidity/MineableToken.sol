@@ -163,7 +163,7 @@ contract MineableToken is IERC20 {
 	        tokensMinted = 0;
 	        epochCount = 0;
 	        epochOld = 0;
-	        miningTarget = _MAXIMUM_TARGET.div(1000);
+	        miningTarget = _MAXIMUM_TARGET.div(10000);
 	        latestDifficultyPeriodStarted2 = block.timestamp;
 	        _startNewMiningEpoch();
 	}
