@@ -110,7 +110,7 @@ library ExtendedMath2 {
 // File: contracts/interfaces/IERC20.sol
 
 interface IERC20 {
-	function totalSupply() external view returns (uint256);
+    function totalSupply() external view returns (uint256);
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
     function transfer(address _to, uint _value) external returns (bool success);
