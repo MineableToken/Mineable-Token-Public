@@ -156,19 +156,18 @@ contract MineableToken is IERC20 {
     uint public maxSupplyForEra = (_totalSupply - _totalSupply.div( 2**(rewardEra + 1)));
     uint public reward_amount;
     
-    //Stuff for Functions
+//Stuff for Functions
     uint public tokensMinted = 0;			//Tokens Minted to Miners
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
     
-    // metadata
+// metadata
     string public name = "Mineable Token";
     string public constant symbol = "0xMT";
     uint8 public constant decimals = 18;
 	
     
-    // mint 1 token to setup LPs
 	constructor() {
 	        reward_amount = 50 * 10**uint(decimals);
 	        rewardEra = 0;
@@ -208,7 +207,7 @@ contract MineableToken is IERC20 {
 		
 		balances[mintToAddress] = balances[mintToAddress].add(reward_amount);
 		emit Transfer(address(0), mintToAddress, reward_amount);
-		
+		tokensMinted = tokensMinted.add(reward_amount)
 
 		emit Mint(mintToAddress, reward_amount, epochCount, challengeNumber );
 
@@ -238,25 +237,15 @@ contract MineableToken is IERC20 {
 			}
 		}
 
-		//set the next minted supply at which the era will change
 		// total supply of MINED tokens is 21000000000000000000000000  because of 18 decimal places
 
 		epochCount = epochCount.add(1);
 
-		//every so often, readjust difficulty. Dont readjust when deploying
-		if((epochCount - epochOld) % (_BLOCKS_PER_READJUSTMENT / 8) == 0)
+		//every so often, readjust difficulty
+		if((epochCount) % (_BLOCKS_PER_READJUSTMENT) == 0)
 		{
 			maxSupplyForEra = _totalSupply - _totalSupply.div( 2**(rewardEra + 1));
-
-			uint256 blktimestamp = block.timestamp;
-			uint TimeSinceLastDifficultyPeriod2 = blktimestamp - latestreAdjustStarted;
-			uint adjusDiffTargetTime = targetTime *  (_BLOCKS_PER_READJUSTMENT / 8) ; 
-			latestreAdjustStarted = block.timestamp;
-
-			if( TimeSinceLastDifficultyPeriod2 > adjusDiffTargetTime || (epochCount - epochOld) % _BLOCKS_PER_READJUSTMENT == 0) 
-			{
-				_reAdjustDifficulty();
-			}
+			_reAdjustDifficulty();
 		}
 		bytes32 challengeNumber2 = ArbSys(0x0000000000000000000000000000000000000064).arbBlockHash( ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber() - 1);
 		require(challengeNumber2 != challengeNumber, "No same challenge Solves");
@@ -305,28 +294,14 @@ contract MineableToken is IERC20 {
 /////////////////////////
 
 	function blocksFromReadjust() public view returns (uint256 blocks){
-		blocks = (epochCount - epochOld);
+		blocks = (epochCount % _BLOCKS_PER_READJUSTMENT);
 		return blocks;
 	}
 	
 
 	function blocksToReadjust() public view returns (uint blocks){
-		if((epochCount - epochOld) == 0){
-				return (_BLOCKS_PER_READJUSTMENT);
-		}
-		uint256 blktimestamp = block.timestamp;
-		uint TimeSinceLastDifficultyPeriod2 = blktimestamp - latestreAdjustStarted;
-		uint adjusDiffTargetTime = targetTime * ((epochCount - epochOld) % (_BLOCKS_PER_READJUSTMENT/8)); 
-
-		if( TimeSinceLastDifficultyPeriod2 > adjusDiffTargetTime)
-		{
-				blocks = _BLOCKS_PER_READJUSTMENT/8 - ((epochCount - epochOld) % (_BLOCKS_PER_READJUSTMENT/8));
-				return (blocks);
-		}else{
-			    blocks = _BLOCKS_PER_READJUSTMENT - ((epochCount - epochOld) % _BLOCKS_PER_READJUSTMENT);
-			    return (blocks);
-		}
-	
+		blocks = _BLOCKS_PER_READJUSTMENT - ((epochCount) % _BLOCKS_PER_READJUSTMENT);
+		 return (blocks);
 	}
 
 
