@@ -117,24 +117,25 @@ interface IERC20 {
 
 contract MineableToken is IERC20 {
 
+// Average BlockTime
+    uint public targetTime = 60 * 12;
+
 //Events
     using SafeMath2 for uint256;
     using ExtendedMath2 for uint;
     event Mint(address indexed from, uint reward_amount, uint epochCount, bytes32 newChallengeNumber);
 
-// Managment
+// Managment events
     uint256 override public totalSupply = 21000000000000000000000000;
     bytes32 private constant BALANCE_KEY = keccak256("balance");
     
 //MineableToken INITALIZE Start
-    uint public targetTime = 60 * 12;
-    uint public _BLOCKS_PER_READJUSTMENT = 1024; // should be 1024
-    
     uint _totalSupply = 21000000000000000000000000;
     uint public epochOld = 0;  //Epoch count at each readjustment 
     uint public latestDifficultyPeriodStarted2 = block.timestamp; //BlockTime of last readjustment
     uint public latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
     uint public epochCount = 0;//number of 'blocks' mined
+    uint public _BLOCKS_PER_READJUSTMENT = 1024; // should be 1024
     uint public  _MAXIMUM_TARGET = 2**234;
     uint public  _MINIMUM_TARGET = 2**16; 
     uint public miningTarget = _MAXIMUM_TARGET;  //1000 million difficulty to start until i enable mining
@@ -169,9 +170,9 @@ contract MineableToken is IERC20 {
 	        _startNewMiningEpoch();
 	}
 
-////////////////////////////////
-// Contract Initial Function //
-///////////////////////////////
+//////////////////////////////////
+// Contract Initialize Function //
+//////////////////////////////////
 
 
 	function openMining() public returns (bool success) {
@@ -295,9 +296,9 @@ contract MineableToken is IERC20 {
 
 
 
-/////////////////////////
-//// Helper Functions ///
-/////////////////////////
+//////////////////////////
+//// Helper Functions ////
+//////////////////////////
 
 	function blocksFromReadjust() public view returns (uint256 blocks){
 		blocks = (epochCount % _BLOCKS_PER_READJUSTMENT);
@@ -349,9 +350,9 @@ contract MineableToken is IERC20 {
 
 
 
-/////////////////////////
-// Statistics Functions /
-/////////////////////////
+//////////////////////////
+// Statistics Functions //
+//////////////////////////
 
 	function inflationMined () public view returns (uint YearlyInflation, uint EpochsPerYear, uint RewardsAtTime, uint TimePerEpoch){
 		if(epochCount - epochOld == 0){
