@@ -226,6 +226,8 @@ contract MineableToken is IERC20 {
 	}
 	
 
+
+
 	function _startNewMiningEpoch() internal {
 	
 		//if max supply for the era will be exceeded next reward round then enter the new era before that happens
@@ -235,27 +237,21 @@ contract MineableToken is IERC20 {
 			rewardEra = rewardEra + 1;
 			maxSupplyForEra = _totalSupply - _totalSupply.div( 2**(rewardEra + 1));
 			if(rewardEra < 4){
-				targetTime = ((12 * 60) * 2**rewardEra);
-				if(_BLOCKS_PER_READJUSTMENT <= 16){
-					_BLOCKS_PER_READJUSTMENT = 8;
-				}else{
-					_BLOCKS_PER_READJUSTMENT = _BLOCKS_PER_READJUSTMENT / 2;
-				}
+				targetTime = ((12 * 60) * 2 ** rewardEra);
+				_BLOCKS_PER_READJUSTMENT = 1024 / (2**(rewardEra));
 			}else{
 				reward_amount = ( 50 * 10**uint(decimals)).div( 2**(rewardEra - 3  ) );
 			}
 		}
-
-		// total supply of MINED tokens is ~21000000000000000000000000  because of 18 decimal places
 
 		epochCount = epochCount.add(1);
 
 		//every so often, readjust difficulty
 		if((epochCount) % (_BLOCKS_PER_READJUSTMENT) == 0)
 		{
-			maxSupplyForEra = _totalSupply - _totalSupply.div( 2**(rewardEra + 1));
 			_reAdjustDifficulty();
 		}
+		
 		bytes32 challengeNumber2 = ArbSys(0x0000000000000000000000000000000000000064).arbBlockHash( ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber() - 1);
 		require(challengeNumber2 != challengeNumber, "No same challenge Solves");
 		challengeNumber = challengeNumber2;
