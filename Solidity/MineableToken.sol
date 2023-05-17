@@ -1,5 +1,10 @@
 // Mineable Token (0xMT) - Mineable Token Contract
-//	
+//  ***ADJUST startTime***	
+//  ***ADJUST startTime***	
+//  ***ADJUST startTime***	
+//  ***ADJUST startTime***	
+//  ***ADJUST startTime***	
+//  ***ADJUST startTime***	
 // Symbol: 0xMT
 // Decimals: 18 
 //
@@ -159,7 +164,7 @@ contract MineableToken is IERC20 {
 	
     
 	constructor() {
-		startTime = 1684790977; //May 22nd 2023
+		startTime = block.timestamp; // 1684790977; //May 22nd 2023
 	        reward_amount = 0;  //Zero reward for first day to setup miners
 	        rewardEra = 0;
 	        tokensMinted = 0;
@@ -333,7 +338,9 @@ contract MineableToken is IERC20 {
 			uint shortage_block_pct_extra = shortage_block_pct.sub(100).limitLessThan(1000); //always between 0 and 1000
 			//make it easier
 			miningTarget2 = miningTarget.add(miningTarget.div(1000).mult(shortage_block_pct_extra));   //by up to 2x		}
+		}
 
+		
 		if(miningTarget2 < _MINIMUM_TARGET) //very difficult
 		{
 			miningTarget2 = _MINIMUM_TARGET;
