@@ -150,8 +150,8 @@ contract MineableToken is IERC20 {
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
-    uint public startTime;
-    bool init = false;
+    uint public startTime = = 1684790977; //May 22nd 2023
+    bool locked = false;
 // metadata
     string public name = "Mineable Token";
     string public constant symbol = "0xMT";
@@ -178,8 +178,8 @@ contract MineableToken is IERC20 {
 
 	function openMining() public returns (bool success) {
 		//Starts mining after a few days period for miners to setup is done
-		require(!init, "Only allowed to run once");
-		init = true;
+		require(!locked, "Only allowed to run once");
+		locked = true;
 		require(block.timestamp >= startTime && block.timestamp <= startTime + 60* 60 * 24* 7, "Must be after startTime");
 	        reward_amount = 50 * 10**uint(decimals);
 	        rewardEra = 0;
