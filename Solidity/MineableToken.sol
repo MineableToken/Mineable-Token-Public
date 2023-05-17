@@ -117,15 +117,12 @@ interface IERC20 {
 
 contract MineableToken is IERC20 {
 
-// Average BlockTime
-    uint public targetTime = 60 * 12;
-
 //Events
     using SafeMath2 for uint256;
     using ExtendedMath2 for uint;
     event Mint(address indexed from, uint reward_amount, uint epochCount, bytes32 newChallengeNumber);
 
-// Managment events
+// Managment
     uint256 override public totalSupply = 21000000000000000000000000;
     bytes32 private constant BALANCE_KEY = keccak256("balance");
     
