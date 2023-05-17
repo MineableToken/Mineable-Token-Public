@@ -332,7 +332,7 @@ contract MineableToken is IERC20 {
 
 			uint shortage_block_pct_extra = shortage_block_pct.sub(100).limitLessThan(1000); //always between 0 and 1000
 			//make it easier
-			miningTarget2 = miningTarget.add(miningTarget.div(500).mult(shortage_block_pct_extra));   //by up to 200 %
+			miningTarget2 = miningTarget.add(miningTarget.div(2000).mult(shortage_block_pct_extra));   //by up to 50 %
 		}
 
 		if(miningTarget2 < _MINIMUM_TARGET) //very difficult
