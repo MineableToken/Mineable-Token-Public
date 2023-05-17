@@ -159,7 +159,7 @@ contract MineableToken is IERC20 {
 	
     
 	constructor() {
-		startTime = block.timestamp + 60 * 60 * 1; //Mining opens 1 days after contract launch.
+		startTime = 1684790977; //May 22nd 2023
 	        reward_amount = 0;  //Zero reward for first day to setup miners
 	        rewardEra = 0;
 	        tokensMinted = 0;
@@ -176,7 +176,7 @@ contract MineableToken is IERC20 {
 
 
 	function openMining() public returns (bool success) {
-		//Starts mining after 1 day period for miners to setup is done
+		//Starts mining after a few days period for miners to setup is done
 		require(!init, "Only allowed to run once");
 		init = true;
 		require(block.timestamp >= startTime && block.timestamp <= startTime + 60* 60 * 24* 7, "Must be after startTime");
