@@ -159,19 +159,19 @@ contract MineableToken is IERC20 {
 	
     
 	constructor() {
-		startTime = block.timestamp + 60 * 60 * 24 * 1; //Mining opens 1 days after contract launch.
+		startTime = block.timestamp + 60 * 60 * 1; //Mining opens 1 days after contract launch.
 	        reward_amount = 0;  //Zero reward for first day to setup miners
 	        rewardEra = 0;
 	        tokensMinted = 0;
 	        epochCount = 0;
 	        epochOld = 0;
-	        miningTarget = _MAXIMUM_TARGET.div(10000);
+	        miningTarget = _MAXIMUM_TARGET.div(1000);
 	        latestDifficultyPeriodStarted2 = block.timestamp;
 	        _startNewMiningEpoch();
 	}
 
 ////////////////////////////////
-// Contract Initial Functions //
+// Contract Initial Function //
 ///////////////////////////////
 
 
