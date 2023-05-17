@@ -150,7 +150,7 @@ contract MineableToken is IERC20 {
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
-    uint public startTime = = 1684790977; //May 22nd 2023
+    uint public startTime = 1684790977; //May 22nd 2023
     bool locked = false;
 // metadata
     string public name = "Mineable Token";
@@ -167,7 +167,7 @@ contract MineableToken is IERC20 {
 	        epochOld = 0;
 	        miningTarget = _MAXIMUM_TARGET.div(1000);
 	        latestDifficultyPeriodStarted2 = block.timestamp;
-		latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
+			latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
 	        _startNewMiningEpoch();
 	}
 
@@ -187,7 +187,7 @@ contract MineableToken is IERC20 {
 	        epochCount = 0;
 	        epochOld = 0;
 	        latestDifficultyPeriodStarted2 = block.timestamp;
-		latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
+			latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
 		
 		return true;
 	}
