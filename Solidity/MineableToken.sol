@@ -186,6 +186,8 @@ contract MineableToken is IERC20 {
 	        tokensMinted = 0;
 	        epochCount = 0;
 	        epochOld = 0;
+	        latestDifficultyPeriodStarted2 = block.timestamp;
+		latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
 		
 		return true;
 	}
