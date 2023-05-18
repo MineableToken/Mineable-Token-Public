@@ -17,7 +17,7 @@
 //  On GMT: Monday, May 22, 2023 9:29:37 PM the openMining() function is able to be called once to start mining with rewards
 //
 // No premine, dev cut, or advantage taken at launch. Public miner available at launch.  
-// 100% of the token is given away fairly over 100+ years using Bitcoins model
+// 100% of the token is given away fairly over 50+ years using Bitcoins model
 //
 // Credits: 0xBitcoin
 
