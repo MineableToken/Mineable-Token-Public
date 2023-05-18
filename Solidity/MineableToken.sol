@@ -233,8 +233,6 @@ contract MineableToken is IERC20 {
 	}
 	
 
-
-
 	function _startNewMiningEpoch() internal {
 	
 		//if max supply for the era will be exceeded next reward round then enter the new era before that happens
@@ -297,7 +295,7 @@ contract MineableToken is IERC20 {
 		{
 			miningTarget = _MAXIMUM_TARGET;
 		}
-		
+	
 	}
 
 
@@ -411,12 +409,12 @@ contract MineableToken is IERC20 {
 		}else{
 			return ( 50 * 10**uint(decimals)).div( 2**(rewardEra - 3  ) );
 		}
-		}
+	}
 
 
 	function getEpoch() public view returns (uint) {
 
-		return epochCount ;
+		return epochCount;
 
 	}
 
@@ -429,6 +427,7 @@ contract MineableToken is IERC20 {
 		return digest;
 
 	}
+
 
 
 /////////////////////////
