@@ -551,7 +551,7 @@ contract MineableToken is IERC20 {
 
 
 	fallback() external payable {
-            revert();
+        revert();
 
 	}
 }
