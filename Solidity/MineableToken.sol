@@ -165,7 +165,7 @@ contract MineableToken is IERC20 {
 	
     
 	constructor() {
-			startTime = 1684790977; // On GMT: Monday, May 22, 2023 9:29:37 PM
+		startTime = 1684790977; // On GMT: Monday, May 22, 2023 9:29:37 PM
 	        reward_amount = 0;  //Zero reward for first days to setup miners
 	        rewardEra = 0;
 	        tokensMinted = 0;
@@ -173,7 +173,7 @@ contract MineableToken is IERC20 {
 	        epochOld = 0;
 	        miningTarget = _MAXIMUM_TARGET.div(2000);
 	        latestDifficultyPeriodStarted2 = block.timestamp;
-			latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
+		latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
 	        _startNewMiningEpoch();
 	}
 
@@ -195,7 +195,7 @@ contract MineableToken is IERC20 {
 	        epochOld = 0;
 	        miningTarget = _MAXIMUM_TARGET.div(2000);
 	        latestDifficultyPeriodStarted2 = block.timestamp;
-			latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
+		latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
 		return true;
 	}
 
