@@ -206,13 +206,8 @@ contract MineableToken is IERC20 {
 // Main Contract Functions //
 /////////////////////////////
 
-	function mint(uint256 nonce, bytes32 challenge_digest) public returns (bool success) {
-		mintTo(nonce, challenge_digest, msg.sender);
-		return true;
-	}
-	
 
-	function mintTo(uint256 nonce, bytes32 challenge_digest, address mintToAddress) public returns (uint256 totalOwed) {
+	function mint(uint256 nonce, bytes32 challenge_digest) public returns (bool success) {
 	
 		bytes32 digest =  keccak256(abi.encodePacked(challengeNumber, msg.sender, nonce));
 
@@ -224,13 +219,12 @@ contract MineableToken is IERC20 {
 
 		_startNewMiningEpoch();
 
-		balances[mintToAddress] = balances[mintToAddress].add(reward_amount);
+		balances[msg.sender] = balances[msg.sender].add(reward_amount);
 		tokensMinted = tokensMinted.add(reward_amount);
 
-		emit Mint(mintToAddress, reward_amount, epochCount, challengeNumber );
+		emit Mint(msg.sender, reward_amount, epochCount, challengeNumber );
 
-		return totalOwed;
-
+		return true;
 	}
 	
 
@@ -296,7 +290,6 @@ contract MineableToken is IERC20 {
 		{
 			miningTarget = _MAXIMUM_TARGET;
 		}
-	
 	}
 
 
