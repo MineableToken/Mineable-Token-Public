@@ -544,7 +544,7 @@ contract MineableToken is IERC20 {
 
 
 
-	  //Allow ETH to enter
+    //Don't allow ETH to enter
 	receive() external payable {
         revert();
 	}
