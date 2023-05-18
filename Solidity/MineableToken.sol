@@ -1,10 +1,5 @@
 // Mineable Token (0xMT) - Mineable Token Contract
-//  ***ADJUST startTime***	
-//  ***ADJUST startTime***	
-//  ***ADJUST startTime***	
-//  ***ADJUST startTime***	
-//  ***ADJUST startTime***	
-//  ***ADJUST startTime***	
+//
 // Symbol: 0xMT
 // Decimals: 18 
 //
@@ -15,6 +10,11 @@
 // Website: https://0xmt.com/
 // Public Miner: https://0xmt.com/download.html
 // Discord: https://discord.gg/EBHPmMUE45
+//
+// No premine, dev cut, or advantage taken at launch. Public miner available at launch.  100% of the token is given away fairly over 100+ years using Bitcoins model!
+//
+// Contract allows 4 days for miners to setup miners with zero rewards 
+//  On GMT: Monday, May 22, 2023 9:29:37 PM the openMining() function is able to be called to start mining with rewards
 //
 // No premine, dev cut, or advantage taken at launch. Public miner available at launch.  100% of the token is given away fairly over 100+ years using Bitcoins model!
 //
@@ -134,16 +134,16 @@ contract MineableToken is IERC20 {
     uint256 override public totalSupply = 21000000000000000000000000;
     bytes32 private constant BALANCE_KEY = keccak256("balance");
     
-//MineableToken INITALIZE Start
+//MineableToken Start
     uint _totalSupply = 21000000000000000000000000;
     uint public epochOld = 0;  //Epoch count at each readjustment 
     uint public latestDifficultyPeriodStarted2 = block.timestamp; //BlockTime of last readjustment
     uint public latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
-    uint public epochCount = 0;//number of 'blocks' mined
+    uint public epochCount = 0; //number of 'blocks' mined
     uint public _BLOCKS_PER_READJUSTMENT = 1024; // should be 1024
     uint public  _MAXIMUM_TARGET = 2**234;
     uint public  _MINIMUM_TARGET = 2**16; 
-    uint public miningTarget = _MAXIMUM_TARGET;  //1000 million difficulty to start until i enable mining
+    uint public miningTarget = _MAXIMUM_TARGET;
     
     bytes32 public challengeNumber = ArbSys(0x0000000000000000000000000000000000000064).arbBlockHash( ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber() - 2);   //generate a new one when a new reward is minted
 
@@ -155,8 +155,9 @@ contract MineableToken is IERC20 {
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
-    uint public startTime = 1684790977; //May 22nd 2023
+    uint public startTime = 1684790977;  //On GMT: Monday, May 22, 2023 9:29:37 PM
     bool locked = false;
+	
 // metadata
     string public name = "Mineable Token";
     string public constant symbol = "0xMT";
@@ -164,17 +165,18 @@ contract MineableToken is IERC20 {
 	
     
 	constructor() {
-		startTime = block.timestamp; // 1684790977; //May 22nd 2023
-	        reward_amount = 0;  //Zero reward for first day to setup miners
+			startTime = 1684790977; // On GMT: Monday, May 22, 2023 9:29:37 PM
+	        reward_amount = 0;  //Zero reward for first days to setup miners
 	        rewardEra = 0;
 	        tokensMinted = 0;
 	        epochCount = 0;
 	        epochOld = 0;
-	        miningTarget = _MAXIMUM_TARGET.div(1000);
+	        miningTarget = _MAXIMUM_TARGET.div(2000);
 	        latestDifficultyPeriodStarted2 = block.timestamp;
 			latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
 	        _startNewMiningEpoch();
 	}
+
 
 //////////////////////////////////
 // Contract Initialize Function //
@@ -191,11 +193,12 @@ contract MineableToken is IERC20 {
 	        tokensMinted = 0;
 	        epochCount = 0;
 	        epochOld = 0;
+	        miningTarget = _MAXIMUM_TARGET.div(2000);
 	        latestDifficultyPeriodStarted2 = block.timestamp;
 			latestDifficultyPeriodStarted = ArbSys(0x0000000000000000000000000000000000000064).arbBlockNumber();
-		
 		return true;
 	}
+
 
 
 /////////////////////////////
@@ -221,7 +224,6 @@ contract MineableToken is IERC20 {
 		_startNewMiningEpoch();
 
 		balances[mintToAddress] = balances[mintToAddress].add(reward_amount);
-		emit Transfer(address(0), mintToAddress, reward_amount);
 		tokensMinted = tokensMinted.add(reward_amount);
 
 		emit Mint(mintToAddress, reward_amount, epochCount, challengeNumber );
@@ -275,7 +277,7 @@ contract MineableToken is IERC20 {
 		if( TimeSinceLastDifficultyPeriod2 < adjusDiffTargetTime )
 		{
 			uint excess_block_pct = (adjusDiffTargetTime.mult(100)).div( TimeSinceLastDifficultyPeriod2 );
-			uint excess_block_pct_extra = excess_block_pct.sub(100).limitLessThan(1000);
+			uint excess_block_pct_extra = excess_block_pct.sub(100).limitLessThan(1000); //always between 0 and 1000
 			//make it harder 
 			miningTarget = miningTarget.sub(miningTarget.div(2000).mult(excess_block_pct_extra));   //by up to 1/2x
 		}else{
@@ -352,55 +354,6 @@ contract MineableToken is IERC20 {
 		difficulty = _MAXIMUM_TARGET.div(miningTarget2);
 			return difficulty;
 	}
-
-
-
-//////////////////////////
-// Statistics Functions //
-//////////////////////////
-
-	function inflationMined () public view returns (uint YearlyInflation, uint EpochsPerYear, uint RewardsAtTime, uint TimePerEpoch){
-		if(epochCount - epochOld == 0){
-			return (0, 0, 0, 0);
-		}
-		uint256 blktimestamp = block.timestamp;
-		uint TimeSinceLastDifficultyPeriod2 = blktimestamp - latestDifficultyPeriodStarted2;
-
-        
-		TimePerEpoch = TimeSinceLastDifficultyPeriod2 / blocksFromReadjust(); 
-		RewardsAtTime = reward_amount;
-		uint year = 365 * 24 * 60 * 60;
-		EpochsPerYear = year / TimePerEpoch;
-		YearlyInflation = RewardsAtTime * EpochsPerYear;
-		return (YearlyInflation, EpochsPerYear, RewardsAtTime, TimePerEpoch);
-	}
-
-	
-	function toNextEraDays () public view returns (uint daysToNextEra, uint _maxSupplyForEra, uint _tokensMinted, uint amtDaily){
-
-        (uint totalamt,,,) = inflationMined();
-		(amtDaily) = totalamt / 365;
-		if(amtDaily == 0){
-			return(0,0,0,0);
-		}
-		daysToNextEra = (maxSupplyForEra - tokensMinted) / amtDaily;
-		return (daysToNextEra, maxSupplyForEra, tokensMinted, amtDaily);
-	}
-	
-
-	function toNextEraEpochs () public view returns ( uint epochs, uint epochTime, uint daysToNextEra){
-		if(blocksFromReadjust() == 0){
-			return (0,0,0);
-        }
-		uint256 blktimestamp = block.timestamp;
-        uint TimeSinceLastDifficultyPeriod2 = blktimestamp - latestDifficultyPeriodStarted2;
-		uint timePerEpoch = TimeSinceLastDifficultyPeriod2 / blocksFromReadjust();
-		(uint daysz,,,) = toNextEraDays();
-		uint amt = daysz * (60*60*24) / timePerEpoch;
-		return (amt, timePerEpoch, daysz);
-	}
-
-
 
 /////////////////////////
 /// Debug Functions  ////
