@@ -1,5 +1,9 @@
+/**
+ *Submitted for verification at Arbiscan on 2023-05-25
+*/
+
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.17;
 contract Ownable {
     address public owner;
 
@@ -71,9 +75,9 @@ contract PoolHelper_0xMT is Ownable {
     }
 
     function adjustAll(int256 _newMaxFeeToPayInUSD, uint256 _newMinimumPayout, uint256 _newMaxPercent) external{
-        adjustMinimumPayout(_newMinimumPayout);
-        adjustMaxPercent(_newMaxPercent);
-        adjustMaxFeeToPayInUSDCents(_newMaxFeeToPayInUSD);
+        this.adjustMinimumPayout(_newMinimumPayout);
+        this.adjustMaxPercent(_newMaxPercent);
+        this.adjustMaxFeeToPayInUSDCents(_newMaxFeeToPayInUSD);
     }
 
 
@@ -100,7 +104,7 @@ contract PoolHelper_0xMT is Ownable {
 
     function getUsers_Minimum_Payout(address user) public view returns (uint256 minimumPayout){
         UserSettings storage settings = userSettings[user];
-        if(settings.maxFeeInPercent == 0){
+        if(settings.minimumPayout == 0){
             return  defaultSettings.minimumPayout;
         }
         return  userSettings[user].minimumPayout;
