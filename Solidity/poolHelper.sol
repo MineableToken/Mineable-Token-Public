@@ -21,7 +21,7 @@ contract Ownable {
     }
 }
 
-contract PayoutContract is Ownable {
+contract PoolHelper_0xMT is Ownable {
     struct UserSettings {
         uint256 minimumPayout;
         int256 maxFeeToPayInUSDCents;
@@ -70,7 +70,11 @@ contract PayoutContract is Ownable {
         settings.maxFeeInPercent = _newMaxPercent;
     }
 
-
+    function adjustAll(int256 _newMaxFeeToPayInUSD, uint256 _newMinimumPayout, uint256 _newMaxPercent) external{
+        adjustMinimumPayout(_newMinimumPayout);
+        adjustMaxPercent(_newMaxPercent);
+        adjustMaxFeeToPayInUSDCents(_newMaxFeeToPayInUSD);
+    }
 
 
 
