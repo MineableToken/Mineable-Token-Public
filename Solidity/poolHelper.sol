@@ -1,9 +1,8 @@
-/**
- *Submitted for verification at Arbiscan on 2023-05-25
-*/
+//For https://dapp.pool.0xmt.com Pool for 0xMT
+// 0xMT Main Webpage https://0xmt.com
 
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
+
 contract Ownable {
     address public owner;
 
@@ -46,10 +45,6 @@ contract PoolHelper_0xMT is Ownable {
 
 
 
-
-
-
-
     function adjustMinimumPayout(uint256 _newMinimumPayout) external {
         if(_newMinimumPayout == 0){
             _newMinimumPayout = 1;
@@ -58,14 +53,17 @@ contract PoolHelper_0xMT is Ownable {
         settings.minimumPayout = _newMinimumPayout;
     }
 
+
     function adjustMaxFeeToPayInUSDCents(int256 _newMaxFeeToPayInUSD) external {
          int256 newMaxFee = _newMaxFeeToPayInUSD;
     if (newMaxFee == 0) {
         newMaxFee = -1;
     }
-    userSettings[msg.sender].maxFeeToPayInUSDCents= newMaxFee;
+        UserSettings storage settings = userSettings[msg.sender];
+        userSettings[msg.sender].maxFeeToPayInUSDCents= newMaxFee;
     }
     
+
     function adjustMaxPercent(uint256 _newMaxPercent) external {
         if(_newMaxPercent == 0){
             _newMaxPercent = 1;
@@ -73,6 +71,7 @@ contract PoolHelper_0xMT is Ownable {
         UserSettings storage settings = userSettings[msg.sender];
         settings.maxFeeInPercent = _newMaxPercent;
     }
+
 
     function adjustAll(int256 _newMaxFeeToPayInUSD, uint256 _newMinimumPayout, uint256 _newMaxPercent) external{
         this.adjustMinimumPayout(_newMinimumPayout);
