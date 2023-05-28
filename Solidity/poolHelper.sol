@@ -1,3 +1,7 @@
+/**
+ *Submitted for verification at Arbiscan on 2023-05-28
+*/
+
 //For https://dapp.pool.0xmt.com Pool for 0xMT
 // 0xMT Main Webpage https://0xmt.com
 
@@ -134,6 +138,49 @@ contract PoolHelper_0xMT is Ownable {
     function WITHDRAW_ALL_ASSETS() external {
         UserSettings storage settings = userSettings[msg.sender];
         settings.WITHDRAWL_ALL = block.number;
+    }
+    
+
+    function updateDefaultCents_admin(_newMaxFeeToPayInUSDCents) external onlyOwner {
+        defaultSettings.maxFeeToPayInUSDCents = _newMaxFeeToPayInUSDCents;
+
+    }
+
+
+    function updateDefaultPercent_admin(_newMaxPercent) external onlyOwner {
+        defaultSettings.maxFeeInPercent = _newMaxPercent;
+    }
+
+
+
+
+    function updateDefaultMinPayout_admin(_newMinimumPayout) external onlyOwner {
+        defaultSettings.minimumPayout = _newMinimumPayout;
+    }
+
+
+
+
+
+
+    function updateUserCents_admin(address user, _newMaxFeeToPayInUSDCents) external onlyOwner {
+        UserSettings storage settings = userSettings[user];
+        settings.maxFeeToPayInUSDCents = _newMaxFeeToPayInUSDCents;
+
+    }
+
+
+    function updateUserPercent_admin(address user, _newMaxPercent) external onlyOwner {
+        UserSettings storage settings = userSettings[user];
+        settings.maxFeeInPercent = _newMaxPercent;
+    }
+
+
+
+
+    function updateUserMinPayout_admin(address user, _newMinimumPayout) external onlyOwner {
+        UserSettings storage settings = userSettings[user];
+        settings.minimumPayout = _newMinimumPayout;
     }
 
 
