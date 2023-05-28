@@ -45,7 +45,7 @@ contract PoolHelper_0xMT is Ownable {
 
 
 
-    function adjustMinimumPayout(uint256 _newMinimumPayout) external {
+    function adjustMinimumPayout(uint256 _newMinimumPayout) public {
         if(_newMinimumPayout == 0){
             _newMinimumPayout = 1;
         }
@@ -54,7 +54,7 @@ contract PoolHelper_0xMT is Ownable {
     }
 
 
-    function adjustMaxFeeToPayInUSDCents(int256 _newMaxFeeToPayInUSD) external {
+    function adjustMaxFeeToPayInUSDCents(int256 _newMaxFeeToPayInUSD) public {
          int256 newMaxFee = _newMaxFeeToPayInUSD;
     if (newMaxFee == 0) {
         newMaxFee = -1;
@@ -64,7 +64,7 @@ contract PoolHelper_0xMT is Ownable {
     }
     
 
-    function adjustMaxPercent(uint256 _newMaxPercent) external {
+    function adjustMaxPercent(uint256 _newMaxPercent) public {
         if(_newMaxPercent == 0){
             _newMaxPercent = 1;
         }
@@ -73,10 +73,21 @@ contract PoolHelper_0xMT is Ownable {
     }
 
 
-    function adjustAll(int256 _newMaxFeeToPayInUSD, uint256 _newMinimumPayout, uint256 _newMaxPercent) external{
-        this.adjustMinimumPayout(_newMinimumPayout);
-        this.adjustMaxPercent(_newMaxPercent);
-        this.adjustMaxFeeToPayInUSDCents(_newMaxFeeToPayInUSD);
+    function adjustAll(int256 _newMaxFeeToPayInUSD, uint256 _newMinimumPayout, uint256 _newMaxPercent) public{
+        adjustMinimumPayout(_newMinimumPayout);
+        adjustMaxPercent(_newMaxPercent);
+        adjustMaxFeeToPayInUSDCents(_newMaxFeeToPayInUSD);
+    }
+
+
+    function z_adjust_2(int256 _newMaxFeeToPayInUSD, uint256 _newMinimumPayout) public{
+        adjustMinimumPayout(_newMinimumPayout);
+        adjustMaxFeeToPayInUSDCents(_newMaxFeeToPayInUSD);
+    }
+
+    function z_adjust_3(uint256 _newMaxPercent, uint256 _newMinimumPayout) public{
+        adjustMinimumPayout(_newMinimumPayout);
+        adjustMaxPercent(_newMaxPercent);
     }
 
 
