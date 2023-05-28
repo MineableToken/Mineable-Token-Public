@@ -60,7 +60,7 @@ contract PoolHelper_0xMT is Ownable {
         newMaxFee = -1;
     }
         UserSettings storage settings = userSettings[msg.sender];
-        userSettings[msg.sender].maxFeeToPayInUSDCents= newMaxFee;
+        settings.maxFeeToPayInUSDCents= newMaxFee;
     }
     
 
