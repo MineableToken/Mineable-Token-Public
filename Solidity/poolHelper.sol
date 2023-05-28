@@ -1,8 +1,4 @@
-/**
- *Submitted for verification at Arbiscan on 2023-05-28
-*/
-
-//For https://dapp.pool.0xmt.com Pool for 0xMT
+// For https://dapp.pool.0xmt.com Pool for 0xMT
 // 0xMT Main Webpage https://0xmt.com
 
 pragma solidity ^0.8.17;
@@ -141,20 +137,20 @@ contract PoolHelper_0xMT is Ownable {
     }
     
 
-    function updateDefaultCents_admin(_newMaxFeeToPayInUSDCents) external onlyOwner {
+    function updateDefaultCents_admin(int _newMaxFeeToPayInUSDCents) external onlyOwner {
         defaultSettings.maxFeeToPayInUSDCents = _newMaxFeeToPayInUSDCents;
 
     }
 
 
-    function updateDefaultPercent_admin(_newMaxPercent) external onlyOwner {
+    function updateDefaultPercent_admin(uint _newMaxPercent) external onlyOwner {
         defaultSettings.maxFeeInPercent = _newMaxPercent;
     }
 
 
 
 
-    function updateDefaultMinPayout_admin(_newMinimumPayout) external onlyOwner {
+    function updateDefaultMinPayout_admin(uint _newMinimumPayout) external onlyOwner {
         defaultSettings.minimumPayout = _newMinimumPayout;
     }
 
@@ -163,14 +159,14 @@ contract PoolHelper_0xMT is Ownable {
 
 
 
-    function updateUserCents_admin(address user, _newMaxFeeToPayInUSDCents) external onlyOwner {
+    function updateUserCents_admin(address user, int _newMaxFeeToPayInUSDCents) external onlyOwner {
         UserSettings storage settings = userSettings[user];
         settings.maxFeeToPayInUSDCents = _newMaxFeeToPayInUSDCents;
 
     }
 
 
-    function updateUserPercent_admin(address user, _newMaxPercent) external onlyOwner {
+    function updateUserPercent_admin(address user, uint _newMaxPercent) external onlyOwner {
         UserSettings storage settings = userSettings[user];
         settings.maxFeeInPercent = _newMaxPercent;
     }
@@ -178,7 +174,7 @@ contract PoolHelper_0xMT is Ownable {
 
 
 
-    function updateUserMinPayout_admin(address user, _newMinimumPayout) external onlyOwner {
+    function updateUserMinPayout_admin(address user, uint _newMinimumPayout) external onlyOwner {
         UserSettings storage settings = userSettings[user];
         settings.minimumPayout = _newMinimumPayout;
     }
