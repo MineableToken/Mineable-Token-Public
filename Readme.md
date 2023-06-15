@@ -56,7 +56,7 @@ When mining Mineable Token, whenever a miner submits a solution, the miner must 
 
 ## Smart Contract
 
-Typically, ERC20 tokens will grant all tokens to the owner or will have an ICO which demands that amounts of Ether be sent to the owner for an initial offering of tokens.  Instead of granting tokens to the 'contract owner', all Mineable Tokens are locked within the smart contract initially. These tokens are dispensed, 50 at a time, by calling the function 'mint' and using Proof of Work, similar to mining bitcoin classic. The 0xBitcoin smart contract is the first token to adhere to the ERC541 Draft Specification. As such the following Smart Contract methods are explicitly supported:
+Typically, ERC20 tokens will grant all tokens to the owner or will have an ICO which demands that amounts of Ether be sent to the owner for an initial offering of tokens.  Instead of granting tokens to the 'contract owner', all Mineable Tokens are locked within the smart contract initially. These tokens are dispensed, 50 at a time, by calling the function 'mint' and using Proof of Work, similar to mining bitcoin classic. The following Smart Contract methods are explicitly supported in Mineable Token:
 
 ## Token
 ### ERC-20 Interface
@@ -158,12 +158,22 @@ but interfaces and other contracts MUST NOT expect these values to be present.
 
 #### checkMintSolution
 
-Verifies a sample solution using the same scheme as the mint method.
+Verifies a sample solution using the same scheme as the mint method for only sender.
 
 ``` js
 function checkMintSolution(uint256 nonce, bytes32 challenge_digest, bytes32 challenge_number, uint testTarget) public view returns (bool success) 
 ```
-OPTIONAL - This method can be used to improve usability,
+OPTIONAL - This method can be used to improve usability, 
+but interfaces and other contracts MUST NOT expect these values to be present.
+
+#### checkMintSolutionForAddress
+
+Verifies a sample solution using the same scheme as the mint method for any address.
+
+``` js
+function checkMintSolutionForAddress(uint256 nonce, bytes32 challenge_digest, bytes32 challenge_number, uint testTarget, address sender) public view returns (bool success) 
+```
+OPTIONAL - This method can be used to improve usability, 
 but interfaces and other contracts MUST NOT expect these values to be present.
 
 ## Minting New Mineable Tokens
